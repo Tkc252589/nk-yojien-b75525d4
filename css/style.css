@@ -657,6 +657,7 @@ section {
   }
 }
 @media (max-width: 600px) {
+  .pc-br { display: none; }
   .features__grid {
     grid-template-columns: 1fr;
   }
