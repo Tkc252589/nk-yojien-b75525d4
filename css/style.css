@@ -39,6 +39,15 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+
+/* 日本語組版：禁則処理＆孤立文字防止 */
+p, h1, h2, h3, h4, blockquote, dt, dd, li, .greeting__body, .voice__quote, .surprise__letter {
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+  font-feature-settings: "palt" 1;
+}
 img { max-width: 100%; height: auto; display: block; filter: saturate(1.05); }
 a { color: inherit; text-decoration: none; transition: opacity .2s; }
 a:hover { opacity: .7; }
