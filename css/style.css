@@ -656,8 +656,22 @@ section {
     grid-row: span 2;
   }
 }
+/* PC/SP 改行制御 */
+.sp-br { display: none; }
+
 @media (max-width: 600px) {
   .pc-br { display: none; }
+  .sp-br { display: inline; }
+  /* Hero のSCROLLをスマホでは非表示（流山市と被るため） */
+  .hero__scroll { display: none !important; }
+  /* Hero テキストの位置調整 */
+  .hero__copy {
+    bottom: clamp(60px, 10vh, 120px) !important;
+  }
+  .hero__date {
+    font-size: .85rem !important;
+    padding: 6px 14px !important;
+  }
   .features__grid {
     grid-template-columns: 1fr;
   }
