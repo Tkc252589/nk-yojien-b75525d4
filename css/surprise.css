@@ -1,0 +1,357 @@
+/* =========================================
+   サプライズ専用スタイル
+   ※ 本格運用時はこのファイルごと削除＋
+      index.htmlから #surprise / #surpriseOverlay /
+      #inokawaOverlay セクションを削除する
+   ========================================= */
+
+/* ---------- Surprise Letter Section ---------- */
+.surprise {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(245, 166, 91, .12), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(123, 174, 127, .12), transparent 50%),
+    var(--c-bg);
+  padding: clamp(72px, 12vw, 160px) 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+.surprise::before {
+  content: "";
+  position: absolute;
+  top: 5%; left: 5%;
+  font-size: 12rem;
+  opacity: .04;
+  z-index: -1;
+  content: "♡";
+  color: var(--c-main);
+  font-family: var(--ff-script);
+}
+.surprise::after {
+  content: "🎂";
+  position: absolute;
+  bottom: 5%; right: 5%;
+  font-size: 8rem;
+  opacity: .08;
+  z-index: -1;
+}
+.surprise__close {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--c-white);
+  font-size: 1.4rem;
+  color: var(--c-text-light);
+  box-shadow: var(--c-shadow);
+  z-index: 5;
+  transition: transform .2s, color .2s;
+}
+.surprise__close:hover {
+  color: var(--c-main-dark);
+  transform: rotate(90deg);
+}
+.surprise.is-collapsed {
+  display: none;
+}
+.surprise__inner {
+  width: min(100% - 48px, 880px);
+  margin-inline: auto;
+  text-align: center;
+}
+.surprise__tag {
+  font-family: var(--ff-script);
+  font-size: 1.6rem;
+  color: var(--c-main-dark);
+  letter-spacing: .08em;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.surprise__title {
+  font-family: var(--ff-jp);
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 48px;
+  letter-spacing: .01em;
+}
+.surprise__title span {
+  background: linear-gradient(135deg, var(--c-main) 0%, var(--c-accent) 50%, var(--c-sub) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: var(--ff-script);
+  font-size: 1.3em;
+  display: inline-block;
+  padding: 0 .1em;
+}
+.surprise__letter {
+  background: var(--c-white);
+  padding: clamp(32px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--c-shadow-strong);
+  text-align: left;
+  position: relative;
+  border: 1px solid var(--c-line);
+}
+.surprise__letter::before {
+  content: "";
+  position: absolute;
+  top: -8px; left: -8px; right: -8px; bottom: -8px;
+  border: 2px dashed var(--c-line);
+  border-radius: calc(var(--radius-lg) + 4px);
+  pointer-events: none;
+  z-index: -1;
+}
+.surprise__letter p {
+  font-size: 1.05rem;
+  line-height: 2.2;
+  margin-bottom: 22px;
+  color: var(--c-text);
+}
+.surprise__letter p:last-child { margin-bottom: 0; }
+.surprise__sign {
+  text-align: right;
+  font-family: var(--ff-script);
+  font-size: 1.4rem !important;
+  color: var(--c-main-dark);
+  margin-top: 32px !important;
+  font-weight: 700;
+}
+.surprise__photos {
+  margin-top: 48px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--c-shadow-strong);
+  aspect-ratio: 4 / 5;
+  max-width: 540px;
+  margin-inline: auto;
+  background: var(--c-line);
+  cursor: zoom-in;
+}
+.letter-swiper {
+  width: 100%; height: 100%;
+}
+.letter-swiper .swiper-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transform: scale(1.02);
+  transition: transform .6s var(--ease);
+}
+.letter-swiper .swiper-pagination-bullet {
+  background: var(--c-white);
+  opacity: .7;
+}
+.letter-swiper .swiper-pagination-bullet-active {
+  background: var(--c-main);
+  opacity: 1;
+}
+
+/* ---------- Surprise Overlay (?from=takeshi) ---------- */
+.surprise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(245, 166, 91, .25), transparent 60%),
+    linear-gradient(135deg, #2A2520 0%, #3E3A36 100%);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s var(--ease);
+}
+.surprise-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.surprise-overlay.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+.surprise-overlay[hidden] { display: none; }
+
+.surprise-overlay__inner {
+  text-align: center;
+  color: var(--c-white);
+  max-width: 720px;
+}
+.surprise-overlay__tag {
+  font-family: var(--ff-script);
+  font-size: 1.4rem;
+  color: var(--c-accent);
+  letter-spacing: .2em;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp .8s .2s var(--ease) forwards;
+}
+.surprise-overlay__title {
+  font-family: var(--ff-jp);
+  font-size: clamp(2.2rem, 7vw, 5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .02em;
+  margin-bottom: 24px;
+  min-height: 2.4em;
+}
+.surprise-overlay__title::after {
+  content: "_";
+  display: inline-block;
+  animation: blink 1s steps(1) infinite;
+  color: var(--c-accent);
+  font-weight: 400;
+}
+.surprise-overlay__title.is-done::after {
+  display: none;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.surprise-overlay__sub {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  letter-spacing: .04em;
+}
+.surprise-overlay__sub.is-visible {
+  animation: fadeUp .8s var(--ease) forwards;
+}
+.surprise-overlay__btn {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.surprise-overlay__btn.is-visible {
+  animation: fadeUp .8s .2s var(--ease) forwards;
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Inokawa Easter Egg Overlay ---------- */
+.inokawa-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: rgba(62, 58, 54, .85);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s var(--ease);
+  overflow-y: auto;
+}
+.inokawa-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.inokawa-overlay[hidden] { display: none; }
+
+.inokawa-overlay__close {
+  position: absolute;
+  top: 24px; right: 24px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--c-white);
+  color: var(--c-text);
+  font-size: 1.6rem;
+  box-shadow: var(--c-shadow);
+  transition: transform .2s;
+}
+.inokawa-overlay__close:hover {
+  transform: rotate(90deg);
+}
+
+.inokawa-overlay__inner {
+  background: var(--c-bg);
+  border-radius: var(--radius-lg);
+  padding: clamp(36px, 6vw, 64px);
+  width: min(100% - 48px, 720px);
+  text-align: center;
+  box-shadow: var(--c-shadow-strong);
+  position: relative;
+  margin: 24px auto;
+  transform: scale(.9);
+  transition: transform .5s var(--ease);
+}
+.inokawa-overlay.is-visible .inokawa-overlay__inner {
+  transform: scale(1);
+}
+.inokawa-overlay__tag {
+  font-family: var(--ff-script);
+  font-size: 1.4rem;
+  color: var(--c-sub-dark);
+  letter-spacing: .08em;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.inokawa-overlay__title {
+  font-family: var(--ff-jp);
+  font-size: clamp(1.8rem, 4.4vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1.4;
+  color: var(--c-text);
+  margin-bottom: 16px;
+}
+.inokawa-overlay__sign {
+  font-family: var(--ff-script);
+  font-size: 1.4rem;
+  color: var(--c-main-dark);
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+.inokawa-overlay__photos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.inokawa-overlay__photos img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--c-shadow);
+}
+.inokawa-overlay__msg {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--c-text-light);
+  font-weight: 500;
+}
+
+/* Toast (Easter egg discover) */
+.toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-200%);
+  background: var(--c-text);
+  color: var(--c-bg);
+  padding: 14px 24px;
+  border-radius: 100px;
+  font-size: .92rem;
+  font-weight: 500;
+  box-shadow: var(--c-shadow-strong);
+  z-index: 300;
+  transition: transform .5s var(--ease);
+  white-space: nowrap;
+}
+.toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 600px) {
+  .inokawa-overlay__photos {
+    grid-template-columns: 1fr 1fr;
+  }
+  .surprise__photos {
+    aspect-ratio: 4 / 3;
+  }
+}

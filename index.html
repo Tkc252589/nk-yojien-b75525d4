@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow">
+<title>にっしー＆かっほー幼児園</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/surprise.css">
+<style>
+/* Password gate */
+html.locked, html.locked body { overflow: hidden; height: 100%; }
+html.locked body > *:not(#gate) { visibility: hidden; }
+#gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: linear-gradient(135deg, #FFF9F0 0%, #FBF1E0 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif;
+}
+#gate__inner {
+  text-align: center; padding: 48px 32px;
+  background: #fff; border-radius: 24px;
+  box-shadow: 0 16px 48px rgba(62,58,54,.14);
+  border: 1px solid #EAD9BD;
+  max-width: 420px; width: calc(100% - 48px);
+}
+#gate h1 {
+  font-size: 1.4rem; font-weight: 900;
+  color: #E08840; margin-bottom: 8px;
+}
+#gate__sub {
+  font-size: .82rem; color: #6B655E; margin-bottom: 24px;
+}
+#gate__lock { font-size: 2.5rem; margin-bottom: 16px; }
+#gate input {
+  width: 100%; padding: 14px 16px;
+  border: 2px solid #EAD9BD; border-radius: 100px;
+  font-size: 1rem; font-family: inherit;
+  text-align: center; outline: none;
+  transition: border-color .2s;
+  margin-bottom: 12px;
+}
+#gate input:focus { border-color: #F5A65B; }
+#gate button {
+  width: 100%; padding: 14px;
+  background: #F5A65B; color: #fff;
+  border: 0; border-radius: 100px;
+  font-size: 1rem; font-weight: 700;
+  font-family: inherit; cursor: pointer;
+  transition: transform .2s;
+}
+#gate button:hover { transform: translateY(-2px); }
+#gate__error { color: #d04a2a; font-size: .85rem; margin-top: 12px; min-height: 1.2em; }
+.gate-hidden { display: none !important; }
+</style>
+</head>
+<body class="locked">
+
+<!-- Password Gate -->
+<div id="gate">
+  <div id="gate__inner">
+    <div id="gate__lock">🔐</div>
+    <h1>にっしー＆かっほー幼児園</h1>
+    <p id="gate__sub">合言葉を入れてください</p>
+    <form id="gate__form" autocomplete="off">
+      <input type="password" id="gate__pw" autocomplete="off" placeholder="合言葉" autofocus>
+      <button type="submit">開く</button>
+      <p id="gate__error"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  // パスワードはハッシュ化して比較（平文をJSに書かない）
+  // 現在の合言葉: "towers" （変更時は下のhashを更新）
+  // ハッシュ生成: SHA-256
+  const PW_HASH = '183e1b1c9f919196c4bd50a1c3798d06439b1ae8df688bf711b6195dc8238917'; // "towers"
+  const KEY = 'nk_gate_v1';
+  const root = document.documentElement;
+  const body = document.body;
+  const gate = document.getElementById('gate');
+  const form = document.getElementById('gate__form');
+  const pw = document.getElementById('gate__pw');
+  const err = document.getElementById('gate__error');
+
+  async function sha256(s){
+    const buf = new TextEncoder().encode(s);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  function unlock(){
+    root.classList.remove('locked');
+    body.classList.remove('locked');
+    gate.classList.add('gate-hidden');
+    try { sessionStorage.setItem(KEY, '1'); } catch(e){}
+  }
+
+  // 一度認証済みならスキップ
+  try {
+    if (sessionStorage.getItem(KEY) === '1') { unlock(); return; }
+  } catch(e){}
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    err.textContent = '';
+    const input = pw.value.trim().toLowerCase();
+    const hash = await sha256(input);
+    if (hash === PW_HASH) {
+      unlock();
+    } else {
+      err.textContent = '合言葉が違うみたい';
+      pw.value = '';
+      pw.focus();
+    }
+  });
+})();
+</script>
+
+<!-- ============================================
+     DECORATIVE ANIMATIONS (Bus + Baseball)
+============================================ -->
+<div class="deco" aria-hidden="true">
+  <svg class="deco__bus" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bus body -->
+    <rect x="10" y="20" width="160" height="40" rx="8" fill="#F5A65B"/>
+    <rect x="20" y="28" width="20" height="14" rx="2" fill="#FFF9F0"/>
+    <rect x="48" y="28" width="20" height="14" rx="2" fill="#FFF9F0"/>
+    <rect x="76" y="28" width="20" height="14" rx="2" fill="#FFF9F0"/>
+    <rect x="104" y="28" width="20" height="14" rx="2" fill="#FFF9F0"/>
+    <rect x="132" y="28" width="30" height="20" rx="2" fill="#A8DFFF"/>
+    <!-- Door -->
+    <rect x="14" y="44" width="10" height="14" fill="#3E3A36"/>
+    <!-- Wheels -->
+    <circle cx="40" cy="62" r="10" fill="#3E3A36"/>
+    <circle cx="40" cy="62" r="4" fill="#FFF9F0"/>
+    <circle cx="140" cy="62" r="10" fill="#3E3A36"/>
+    <circle cx="140" cy="62" r="4" fill="#FFF9F0"/>
+    <!-- Headlight -->
+    <circle cx="166" cy="36" r="3" fill="#FFD27A"/>
+    <!-- Logo strip -->
+    <rect x="10" y="14" width="160" height="6" fill="#7BAE7F"/>
+  </svg>
+  <span class="deco__ball" aria-hidden="true">⚾</span>
+  <span class="deco__ball deco__ball--2" aria-hidden="true">⚾</span>
+</div>
+
+<!-- ============================================
+     HEADER / NAV
+============================================ -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="#top" class="logo" id="logo">
+      <span class="logo__main">にっしー&amp;かっほー</span>
+      <span class="logo__sub">幼児園</span>
+    </a>
+    <nav class="nav" aria-label="メインナビゲーション">
+      <ul class="nav__list">
+        <li><a href="#concept">園について</a></li>
+        <li><a href="#features">特色</a></li>
+        <li><a href="#voice">園児の声</a></li>
+        <li><a href="#story">物語</a></li>
+        <li><a href="#staff">先生紹介</a></li>
+        <li><a href="#info">入園案内</a></li>
+      </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================
+     HERO
+============================================ -->
+<section class="hero" id="top">
+  <div class="hero__media">
+    <img src="./images/hero/hero-01.jpg" alt="にっしー＆かっほー幼児園のキービジュアル" loading="eager">
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__copy" data-aos="fade-up">
+    <p class="hero__lead">Nisshi &amp; Kahho Kindergarten</p>
+    <h1 class="hero__title">
+      子どもの<br>
+      <em>「なぜ？」</em><br>
+      が育つ場所。
+    </h1>
+    <p class="hero__date">2027年4月 開園予定 ／ 千葉県 流山市</p>
+  </div>
+  <div class="hero__scroll" aria-hidden="true">
+    <span>SCROLL</span>
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================
+     GREETING (いのっち家からのメッセージ)
+============================================ -->
+<section class="greeting" id="greeting">
+  <div class="container">
+    <div class="greeting__card" data-aos="fade-up">
+      <p class="greeting__tag">From a friend ✦</p>
+      <h2 class="greeting__title">
+        みつきさん、<br>かほちゃんへ。
+      </h2>
+      <div class="greeting__body">
+        <p>いつも遊んでくれてありがとう。</p>
+        <p>２人の雰囲気を意識しながら、<br>勝手にHPを作ってみました。</p>
+        <p>２人が作る園を、楽しみにしています。</p>
+        <p>だんくん・ようくんの<br>第２のちちまま として、<br>これからもよろしくお願いします。</p>
+      </div>
+      <p class="greeting__sign">── いのっち家より</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONCEPT
+============================================ -->
+<section class="concept" id="concept">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">CONCEPT</p>
+    <h2 class="section__title" data-aos="fade-up">
+      幼稚園と保育園の、<br>
+      <em>あいだ</em>にある場所。
+    </h2>
+    <div class="concept__grid">
+      <div class="concept__text" data-aos="fade-up">
+        <p>「ちゃんと教えなきゃ」でもなく、<br>
+        「ただ預かるだけ」でもなく。</p>
+        <p>子どもが、自分のペースで、<br>
+        自分の「好き」を見つけていく。<br>
+        そのすぐ隣に、大人が静かに座っている。</p>
+        <p>にっしー＆かっほー幼児園は、<br>
+        そんな「あいだ」の場所を目指します。</p>
+      </div>
+      <div class="concept__img" data-aos="fade-up" data-aos-delay="100">
+        <img src="./images/concept/concept-01.jpg" alt="子どもたちと向き合う先生">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     TEACHER CONCEPT (理事の想い)
+============================================ -->
+<section class="teacher" id="teacher">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">FOR THE TEACHERS</p>
+    <h2 class="section__title" data-aos="fade-up">
+      そして、先生が<br>
+      <em>楽しく笑っている</em>場所。
+    </h2>
+    <div class="teacher__grid">
+      <div class="teacher__img" data-aos="fade-up">
+        <img src="./images/concept/concept-03.jpg" alt="先生たちが笑顔で過ごす風景">
+      </div>
+      <div class="teacher__text" data-aos="fade-up" data-aos-delay="100">
+        <p class="teacher__quote">
+          「先生に余裕があることが、すべて。」
+          <span class="teacher__quote-by">── 理事 西田光希</span>
+        </p>
+        <p>仕組みや環境を整えて、<br>常に先生に余裕がある状態を作り出すこと。<br>それが、わたしの使命です。</p>
+        <p>先生に余裕があると、<br>子どもたちへの接し方が変わる。<br>子どもたちへの接し方が変われば、<br>それは子どもたちの安全と、<br>よりよい成長につながっていく。</p>
+        <p>シンプルだけれど、<br>ここがすべての原点です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FEATURES (写真ベース・絵文字なし)
+============================================ -->
+<section class="features" id="features">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">FEATURES</p>
+    <h2 class="section__title" data-aos="fade-up">わたしたちが、大切にしていること。</h2>
+
+    <div class="features__grid">
+      <article class="feature-card" data-aos="fade-up">
+        <div class="feature-card__media"><img src="./images/concept/feature-nature.jpg" alt=""></div>
+        <div class="feature-card__body">
+          <p class="feature-card__num">01</p>
+          <h3>自然の中で、五感を育てる</h3>
+          <p>裸足で土を踏み、葉を集め、虫の声に耳をすます。四季のうつろいを、まるごと感じる毎日を。</p>
+        </div>
+      </article>
+      <article class="feature-card" data-aos="fade-up" data-aos-delay="50">
+        <div class="feature-card__media"><img src="./images/concept/feature-free.jpg" alt=""></div>
+        <div class="feature-card__body">
+          <p class="feature-card__num">02</p>
+          <h3>自由な発想を、尊重する</h3>
+          <p>「正解」を急がず、「やってみたい」を待つ。子どもの「なぜ？」が、明日の力になる。</p>
+        </div>
+      </article>
+      <article class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card__media"><img src="./images/concept/feature-small.jpg" alt=""></div>
+        <div class="feature-card__body">
+          <p class="feature-card__num">03</p>
+          <h3>少人数制で、一人ひとりと</h3>
+          <p>ひとりひとりの顔と名前と、心の動きが見える。小さな園だから、できることがある。</p>
+        </div>
+      </article>
+      <article class="feature-card" data-aos="fade-up" data-aos-delay="150">
+        <div class="feature-card__media"><img src="./images/concept/feature-family.jpg" alt=""></div>
+        <div class="feature-card__body">
+          <p class="feature-card__num">04</p>
+          <h3>家族との時間を、大切に</h3>
+          <p>送り迎えのほんの数分も、行事の一日も。家族の物語のひとコマになる場所であること。</p>
+        </div>
+      </article>
+      <article class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card__media"><img src="./images/concept/feature-food.jpg" alt=""></div>
+        <div class="feature-card__body">
+          <p class="feature-card__num">05</p>
+          <h3>食を、まるごと体験する</h3>
+          <p>育てて、収穫して、料理して、食べる。「いただきます」が、いちばん深くなる時間を。</p>
+        </div>
+      </article>
+      <article class="feature-card" data-aos="fade-up" data-aos-delay="250">
+        <div class="feature-card__media"><img src="./images/concept/feature-community.jpg" alt=""></div>
+        <div class="feature-card__body">
+          <p class="feature-card__num">06</p>
+          <h3>地域とともに、育てる</h3>
+          <p>流山のおじいちゃん、おばあちゃん、お店、畑。まちぜんぶが、子どもの先生になる。</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     VOICE (ある幼児の本音レビュー - DくんとYくん)
+============================================ -->
+<section class="voice" id="voice">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">KIDS' VOICE</p>
+    <h2 class="section__title" data-aos="fade-up">ある幼児たちの、<em>本音レビュー</em>。</h2>
+
+    <!-- Dくん -->
+    <div class="voice__card" data-aos="fade-up">
+      <div class="voice__photo">
+        <div class="swiper voice-swiper voice-swiper-d">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="./images/voice-d/d-01.jpg" alt="Dくん 1"></div>
+            <div class="swiper-slide"><img src="./images/voice-d/d-02.jpg" alt="Dくん 2"></div>
+            <div class="swiper-slide"><img src="./images/voice-d/d-03.jpg" alt="Dくん 3"></div>
+            <div class="swiper-slide"><img src="./images/voice-d/d-04.jpg" alt="Dくん 4"></div>
+          </div>
+          <div class="swiper-pagination voice-d-pagination"></div>
+        </div>
+      </div>
+      <div class="voice__text">
+        <p class="voice__name">１人目／Dくん（生まれた時から、にっしーかっほーと一緒）</p>
+        <blockquote class="voice__quote">
+          <p>えっとね、ぼく、生まれてからずっと<br>にっしーとかっほーと遊んでるの。</p>
+          <p>にっしーはね、ぼくがどんなに無茶ぶりしても、<br>最後まで真顔で付き合ってくれる。<br>ふつうの大人、途中で「もう無理」って言うのに。</p>
+          <p>かっほーはね、ぼくの「あのね、あのね」っていう<br>つまんない話を、ぜんぶ「うんうん、それで？」って<br>本気で聞いてくれるの。<br>ふつうの大人、たぶん3秒で目が泳ぐよ。</p>
+          <p class="voice__quote-strong">
+            だからさ、<br>
+            <em>この２人がやる園、通うしかないでしょ。</em>
+          </p>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- Yくん -->
+    <div class="voice__card voice__card--reverse" data-aos="fade-up">
+      <div class="voice__photo">
+        <div class="swiper voice-swiper voice-swiper-y">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="./images/voice-y/y-01.jpg" alt="Yくん 1"></div>
+            <div class="swiper-slide"><img src="./images/voice-y/y-02.jpg" alt="Yくん 2"></div>
+          </div>
+          <div class="swiper-pagination voice-y-pagination"></div>
+        </div>
+      </div>
+      <div class="voice__text">
+        <p class="voice__name">２人目／Yくん（兄ちゃんの後ろをついて回る、見習い中）</p>
+        <blockquote class="voice__quote">
+          <p>あ、ぼく、Yです。よろしくお願いしますっ。</p>
+          <p>にっしーは、ぼくがちょっと泣きそうになってると、<br>「えっ、なんで！？」って大げさに驚いてくれる人。<br>その瞬間、なんか泣くタイミング逃すんだよね。<br>……たぶん、わざとやってる。</p>
+          <p>かっほーはね、ぼくが何にも言わなくても、<br>ぼくの欲しいやつ、すーっと出してくれるの。<br>エスパーかな？ ちがうな。たぶん、見てくれてるんだ。</p>
+          <p class="voice__quote-strong">
+            にいちゃんも言ってたけど、<br>
+            <em>うん、この園、間違いないっす。</em>
+          </p>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     STORY (タワーズ・西田家の物語)
+============================================ -->
+<section class="story" id="story">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">OUR STORY</p>
+    <h2 class="section__title" data-aos="fade-up">
+      <em>タワーズ</em>から、<br>
+      ふたりの園へ。
+    </h2>
+
+    <div class="story__grid">
+      <div class="story__photos" data-aos="fade-up">
+        <div class="swiper story-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="./images/family/family-wedding-01.jpg" alt="西田家のはじまり 1"></div>
+            <div class="swiper-slide"><img src="./images/family/family-wedding-02.jpg" alt="西田家のはじまり 2"></div>
+            <div class="swiper-slide"><img src="./images/concept/concept-02.jpg" alt="西田家の日常 1"></div>
+            <div class="swiper-slide"><img src="./images/concept/concept-03.jpg" alt="西田家の日常 2"></div>
+          </div>
+          <div class="swiper-pagination story-pagination"></div>
+        </div>
+      </div>
+
+      <div class="story__text" data-aos="fade-up" data-aos-delay="100">
+        <h3>シンガポールの空の下、<br>ソフトボールチーム「Towers」で。</h3>
+        <p>みつきと香穂が出会ったのは、シンガポールのソフトボールチーム<strong>「Towers（タワーズ）」</strong>のグラウンドでした。</p>
+
+        <p>白球を追いかけながら、<br>たくさんの家族と、たくさんの子どもたちと出会いました。<br>国も、文化も、子育ての形も違うのに、<br>子どもたちはみんな、ただただ毎日を楽しそうに生きている。</p>
+
+        <p>「子どもって、こんなに自由でいいんだ」<br>「先生が楽しそうにしてる場所って、子どもも楽しそう」</p>
+
+        <p>そんな小さな気づきが積み重なって、<br>わたしたちは決めました。<br>──いつか、自分たちの園をつくろう、と。</p>
+
+        <p>その「いつか」が、いま、<br>2027年4月、流山で動き出します。</p>
+
+        <div class="story__sign">
+          <p>理事 ／ <strong>西田 光希</strong>（にっしー）</p>
+          <p>スーパー幼稚園先生 ／ <strong>西田 香穂</strong>（かっほー）</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     STAFF (先生紹介)
+============================================ -->
+<section class="staff" id="staff">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">STAFF</p>
+    <h2 class="section__title" data-aos="fade-up">園を作る、<em>ふたり</em>。</h2>
+
+    <div class="staff__grid">
+      <article class="staff-card" data-aos="fade-up">
+        <div class="staff-card__photo">
+          <img src="./images/staff/mitsuki-01.jpg" alt="西田 光希">
+        </div>
+        <div class="staff-card__body">
+          <p class="staff-card__role">理事</p>
+          <h3 class="staff-card__name">西田 光希<span>Mitsuki Nishida</span></h3>
+          <p class="staff-card__nickname">"にっしー"</p>
+          <p class="staff-card__bio">
+            酒とツッコミとマヨネーズを<br>
+            こよなく愛する男。<br>
+            「カロリーハーフ？それはマヨじゃねぇ」が口グセ。<br>
+            Towersでは長らくキャプテン兼外野手。<br>
+            幼児をつまみに酒を飲むのが、日課。
+          </p>
+        </div>
+      </article>
+
+      <article class="staff-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="staff-card__photo">
+          <img src="./images/staff/kaho-01.jpg" alt="西田 香穂">
+        </div>
+        <div class="staff-card__body">
+          <p class="staff-card__role">スーパー幼稚園先生</p>
+          <h3 class="staff-card__name">西田 香穂<span>Kaho Nishida</span></h3>
+          <p class="staff-card__nickname">"かっほー"</p>
+          <p class="staff-card__bio">
+            嵐とにっしーを、<br>
+            こよなく愛する女。
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     GALLERY
+============================================ -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">GALLERY</p>
+    <h2 class="section__title" data-aos="fade-up">にっしーかっほー幼児園の、ひとコマ。</h2>
+
+    <div class="gallery__grid">
+      <div class="gallery__item gallery__item--lg" data-aos="zoom-in"><img src="./images/gallery/gallery-01.jpg" alt="日々の風景 1" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="50"><img src="./images/gallery/gallery-02.jpg" alt="日々の風景 2" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="100"><img src="./images/gallery/gallery-03.jpg" alt="日々の風景 3" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="150"><img src="./images/gallery/gallery-04.jpg" alt="日々の風景 4" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="200"><img src="./images/gallery/gallery-05.jpg" alt="日々の風景 5" loading="lazy"></div>
+      <div class="gallery__item gallery__item--lg" data-aos="zoom-in" data-aos-delay="50"><img src="./images/gallery/gallery-06.jpg" alt="日々の風景 6" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="100"><img src="./images/gallery/gallery-07.jpg" alt="日々の風景 7" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="150"><img src="./images/gallery/gallery-08.jpg" alt="日々の風景 8" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="200"><img src="./images/gallery/gallery-09.jpg" alt="日々の風景 9" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="250"><img src="./images/gallery/gallery-10.jpg" alt="日々の風景 10" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="300"><img src="./images/gallery/gallery-11.jpg" alt="日々の風景 11" loading="lazy"></div>
+      <div class="gallery__item" data-aos="zoom-in" data-aos-delay="350"><img src="./images/gallery/gallery-12.jpg" alt="日々の風景 12" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SURPRISE LETTER (誕生日サプライズ・ページ後半)
+     ※ 本格運用時はこのセクションごと削除
+============================================ -->
+<section class="surprise" id="surprise">
+  <button class="surprise__close" id="surpriseClose" aria-label="メッセージを閉じる">×</button>
+  <div class="surprise__inner">
+    <p class="surprise__tag" data-aos="fade-up">🎂 Special Letter</p>
+    <h2 class="surprise__title" data-aos="fade-up" data-aos-delay="100">
+      Happy Birthday,<br>
+      <span>Kaho.</span>
+    </h2>
+    <div class="surprise__letter" data-aos="fade-up" data-aos-delay="200">
+      <p>かほちゃん、お誕生日おめでとう。</p>
+      <p>シンガポール、日本でも会えて<br>嬉しい限りです！</p>
+      <p>みつきさんと一緒に作る園、<br>絶対にいい園になると、勝手に確信してます。</p>
+      <p>31歳　楽しんでね〜！</p>
+      <p class="surprise__sign">── いのっち家より</p>
+    </div>
+    <div class="surprise__photos" data-aos="fade-up" data-aos-delay="300">
+      <div class="swiper letter-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="./images/letter/letter-01.jpg" alt="思い出 1"></div>
+          <div class="swiper-slide"><img src="./images/letter/letter-02.jpg" alt="思い出 2"></div>
+          <div class="swiper-slide"><img src="./images/letter/letter-03.jpg" alt="思い出 3"></div>
+          <div class="swiper-slide"><img src="./images/letter/letter-04.jpg" alt="思い出 4"></div>
+          <div class="swiper-slide"><img src="./images/letter/letter-05.jpg" alt="思い出 5"></div>
+          <div class="swiper-slide"><img src="./images/letter/letter-06.jpg" alt="思い出 6"></div>
+          <div class="swiper-slide"><img src="./images/letter/letter-07.jpg" alt="思い出 7"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     INFO (施設情報)
+============================================ -->
+<section class="info" id="info">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">INFORMATION</p>
+    <h2 class="section__title" data-aos="fade-up">入園案内・施設情報</h2>
+
+    <div class="info__grid">
+      <dl class="info__list" data-aos="fade-up">
+        <div><dt>施設名</dt><dd>にっしー＆かっほー幼児園（仮称）</dd></div>
+        <div><dt>所在地</dt><dd>千葉県 流山市（詳細追って公開）</dd></div>
+        <div><dt>開園予定</dt><dd>2027年4月</dd></div>
+        <div><dt>対象年齢</dt><dd>1歳〜就学前</dd></div>
+        <div><dt>定員</dt><dd>30名（少人数制）</dd></div>
+        <div><dt>開園時間</dt><dd>平日 8:00 – 18:00 ／ 土日祝 休園</dd></div>
+        <div><dt>区分</dt><dd>幼稚園と保育園の中間型（幼児園）</dd></div>
+      </dl>
+
+      <div class="info__notice" data-aos="fade-up" data-aos-delay="100">
+        <h3>📣 開園準備中です</h3>
+        <p>現在、2027年4月の開園に向けて準備を進めています。<br>入園説明会・見学会の情報は、こちらのページとSNSでお知らせします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONTACT
+============================================ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <p class="section__tag" data-aos="fade-up">CONTACT</p>
+    <h2 class="section__title" data-aos="fade-up">お問い合わせ</h2>
+    <p class="contact__lead" data-aos="fade-up">入園・見学・取材など、<br>お気軽にご連絡ください。</p>
+    <div class="contact__cta" data-aos="fade-up" data-aos-delay="100">
+      <a href="mailto:inotake.s3@gmail.com?subject=【にっしー%26かっほー幼児園】お問い合わせ&body=お名前：%0D%0Aご用件：%0D%0A%0D%0A" class="btn btn--primary">メールでお問い合わせ</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+============================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__brand">
+      <p class="footer__logo">にっしー&amp;かっほー幼児園</p>
+      <p class="footer__en">Nisshi &amp; Kahho Kindergarten</p>
+    </div>
+    <nav class="footer__nav" aria-label="フッターナビゲーション">
+      <a href="#concept">園について</a>
+      <a href="#features">特色</a>
+      <a href="#voice">園児の声</a>
+      <a href="#story">物語</a>
+      <a href="#staff">先生紹介</a>
+      <a href="#info">入園案内</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+    <p class="footer__copy">
+      <span class="footer__copy-mark" id="copyMark" role="button" tabindex="0" aria-label="クリックで隠しメッセージ" title="クリックしてみて？">©</span>
+      2026 Nisshi &amp; Kahho Kindergarten. Made with ♡ in Nagareyama.
+    </p>
+  </div>
+</footer>
+
+<!-- ============================================
+     FLOATING CONTACT BUTTON
+============================================ -->
+<a href="#contact" class="float-contact" aria-label="お問い合わせ">
+  <span class="float-contact__icon">✉</span>
+  <span class="float-contact__text">お問い合わせ</span>
+</a>
+
+<!-- ============================================
+     SURPRISE OVERLAY (?from=takeshi 起動時)
+============================================ -->
+<div class="surprise-overlay" id="surpriseOverlay" hidden>
+  <div class="surprise-overlay__inner">
+    <p class="surprise-overlay__tag">A SPECIAL DAY ✦</p>
+    <h2 class="surprise-overlay__title" id="overlayTitle"></h2>
+    <p class="surprise-overlay__sub" id="overlaySub"></p>
+    <button class="btn btn--primary surprise-overlay__btn" id="overlayBtn">ページを見る</button>
+  </div>
+</div>
+
+<!-- ============================================
+     INOKAWA EASTER EGG OVERLAY (©5回クリック)
+============================================ -->
+<div class="inokawa-overlay" id="inokawaOverlay" hidden>
+  <button class="inokawa-overlay__close" id="inokawaClose" aria-label="閉じる">×</button>
+  <div class="inokawa-overlay__inner">
+    <p class="inokawa-overlay__tag">🎁 Hidden Message</p>
+    <h2 class="inokawa-overlay__title">タワーズで出会えて<br>本当によかった。</h2>
+    <p class="inokawa-overlay__sign">── いのっち家より</p>
+    <div class="inokawa-overlay__photos">
+      <img src="./images/inokawa/inokawa-01.jpg" alt="思い出 1">
+      <img src="./images/inokawa/inokawa-02.jpg" alt="思い出 2">
+      <img src="./images/inokawa/inokawa-03.jpg" alt="思い出 3">
+      <img src="./images/inokawa/inokawa-04.jpg" alt="思い出 4">
+    </div>
+    <p class="inokawa-overlay__msg">
+      みつき・かほ夫妻、<br>
+      これからも家族ぐるみで、よろしく。
+    </p>
+  </div>
+</div>
+
+<!-- ============================================
+     SCRIPTS
+============================================ -->
+<script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="./js/main.js"></script>
+<script src="./js/surprise.js"></script>
+</body>
+</html>
