@@ -671,11 +671,22 @@ section {
 @media (max-width: 600px) {
   .pc-br { display: none; }
   .sp-br { display: inline; }
-  /* Hero のSCROLLをスマホでは非表示（流山市と被るため） */
-  .hero__scroll { display: none !important; }
-  /* Hero テキストの位置調整 */
+  /* Hero SCROLLをスマホでは画面下中央に（流山市バッジと被らない位置） */
+  .hero__scroll {
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    bottom: 14px !important;
+    font-size: .65rem !important;
+    letter-spacing: .28em !important;
+    gap: 8px !important;
+    opacity: .75;
+  }
+  .hero__scroll-line {
+    height: 32px !important;
+  }
+  /* Hero テキストの位置調整（SCROLL分のスペースを確保） */
   .hero__copy {
-    bottom: clamp(60px, 10vh, 120px) !important;
+    bottom: clamp(90px, 14vh, 140px) !important;
   }
   .hero__date {
     font-size: .85rem !important;
